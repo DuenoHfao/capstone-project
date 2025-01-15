@@ -95,5 +95,9 @@ def reset_password():
 
     return render_template("reset_password.html", logged_in=is_logged_in())
 
+@app.route("/terms")
+def terms():
+    return render_template("terms.html", logged_in=is_logged_in())
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8000)
