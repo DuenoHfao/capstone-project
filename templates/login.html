@@ -12,7 +12,7 @@
   </head>
 
   <body>
-    {% include 'navbar_public.html' %}
+    {% include 'navbar.html' %}
 
     <main>
       <div class="auth-page_container">
@@ -45,7 +45,6 @@
 
     </main>
 
-    {% include 'footer.html' %}
 
     <script src="{{ url_for('static', filename='login-auth.js') }}" type="module"></script>
     <script src="{{ url_for('static', filename='scripts.js') }}" type="module"></script>
