@@ -116,4 +116,4 @@ if __name__ == "__main__":
     logging.basicConfig(filename='myapp.log', level=logging.INFO)
     logger.info(f'Started at {datetime.now()}')
 
-    app.run(host='0.0.0.0', port=5500, debug=True)
+    app.run(host='0.0.0.0', port=5500)
