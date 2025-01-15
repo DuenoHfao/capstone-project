@@ -108,6 +108,10 @@ def reset_password():
 
     return render_template("reset_password.html", logged_in=is_logged_in())
 
+@app.route("/terms")
+def terms():
+    return render_template("terms.html", logged_in=is_logged_in())
+
 if __name__ == "__main__":
     logging.basicConfig(filename='myapp.log', level=logging.INFO)
     logger.info(f'Started at {datetime.now()}')
