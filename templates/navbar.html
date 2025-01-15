@@ -1,0 +1,17 @@
+<div class="navbar">
+    <img class="logo-img" id="miku-qq" src="{{ url_for('static', filename='images/MIKU_LOGO.webp') }}" />
+    <div class="navbar-right" id="navbarRight">
+        <span class="closebtn">&times;</span>
+        <a href="{{ url_for('home') }}">Home</a>
+        <!-- Dropdown for News -->
+        <div class="dropdown">
+            <a class="dropbtn" id="dropBtn">Nanyang University of Singapore</a>
+            <div class="dropdown-content">
+                <a href="#news1">About Us</a>
+                <a href="#news2">About Our Professors</a>
+                <a href="#news3">About Our Projects</a>
+            </div>
+        </div>
+        <a href="{{ url_for('login') }}">Login</a>
+    </div>
+</div>
