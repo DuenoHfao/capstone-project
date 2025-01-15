@@ -2,34 +2,19 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 import os
 import logging
 import secrets
-from datetime import datetime   
-from dotenv import load_dotenv
-from pynamodb.models import Model
-from pynamodb.attributes import UnicodeAttribute
-from pynamodb.exceptions import DoesNotExist
+from datetime import datetime
+from static.dynamo_requests import *
 
 load_dotenv()
 
 app = Flask(__name__)
 logger = logging.getLogger(__name__)
-
 app.secret_key = secrets.token_hex(16)
 
-# DynamoDB table schema (js googled a basic ass one bruh)
-class UserModel(Model):
-    class Meta:
-        table_name = "users"
-        region = "ap-southeast-1"
-        aws_access_key_id = os.getenv('AWS_ACCESS_KEY')
-        aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY')
 
-    email = UnicodeAttribute(hash_key=True, null=False)
-    password = UnicodeAttribute()
-
-
-# Create the table if it doesn't exist
 if not UserModel.exists():
     UserModel.create_table(read_capacity_units=1, write_capacity_units=1, wait=True)
+    logger.info('Created new table')
 
 # Check if user is logged in
 def is_logged_in():
