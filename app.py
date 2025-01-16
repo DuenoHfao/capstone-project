@@ -36,13 +36,13 @@ def signup():
             # Check if the user already exists
             UserModel.get(email)
             flash("Email already registered. Please log in.", "error")
-            return redirect(url_for("login"))
+            return url_for("login")
         except DoesNotExist:
             # Else c    reate a new user
             user = UserModel(email=email, password=password)
             user.save()
             flash("Account created successfully! Please log in.", "success")
-            return redirect(url_for('templates',filename="login"))
+            return url_for("login")
 
     return render_template("signup.html", logged_in=is_logged_in())
 
@@ -56,8 +56,7 @@ def login():
             if user.password == password:
                 session["user"] = email
                 flash("Logged in successfully!", "success")
-                return 'credential success'
-                return redirect(url_for("home"))
+                return url_for("dashboard")
             
             else:
                 flash("Invalid credentials. Please try again.", "error")
