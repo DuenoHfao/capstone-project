@@ -1,0 +1,26 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.8
+    commands:
+      - pip install -r requirements.txt
+
+  pre_build:
+    commands:
+      - echo Pre-build phase
+
+  build:
+    commands:
+      - echo Build started on `date`
+      - python app.py
+
+  post_build:
+    commands:
+      - echo Build completed on `date`
+
+artifacts:
+  files:
+    - '**/*'
+  discard-paths: yes

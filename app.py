@@ -30,7 +30,6 @@ def home():
 def signup():
     if request.method == "POST":
         email = request.form.get("email")
-        return email
         password = request.form.get("password")
 
         try:
