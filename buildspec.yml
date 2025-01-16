@@ -17,7 +17,7 @@ phases:
       - echo Build started on `date`
       - docker build -t duenohfao/capstone-proj .
       - docker tag duenohfao/capstone-proj:latest 323581685419.dkr.ecr.ap-southeast-1.amazonaws.com/duenohfao/capstone-proj:latest
-      - python app.py
+      # - python app.py
 
   post_build:
     commands:
