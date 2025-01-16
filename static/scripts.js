@@ -6,6 +6,7 @@ const signUpEmailInputElement = document.getElementById('signup-email-input');
 const signUpPasswordInputElement = document.getElementById('signup-password-input');
 const signUpCreateAccountButtonElement = document.getElementById('create-account-btn');
 const signUpEmailErrorMessage = document.getElementById('email-error-message');
+const deleteAccountButtonElement = document.getElementById('delete-account-btn');
 
 
 if (signInButtonElement) {
@@ -66,6 +67,24 @@ if (signUpCreateAccountButtonElement) {
             },
             success: function (navigation) {
                 window.location.href = navigation;
+            },
+            error: function (message) {
+                alert(message)
+            }
+        })
+    });
+}
+
+if (deleteAccountButtonElement) {
+    deleteAccountButtonElement.addEventListener('click', (event) => {
+        console.log("Delete account button clicked");
+    
+        $.ajax({
+            url: "/delete-account",
+            type: "POST",
+            success: function (navigation) {
+                alert("Account deleted successfully");
+                window.location.href = '/';
             },
             error: function (message) {
                 alert(message)
