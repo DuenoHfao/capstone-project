@@ -6,6 +6,9 @@ const signUpEmailInputElement = document.getElementById('signup-email-input');
 const signUpPasswordInputElement = document.getElementById('signup-password-input');
 const signUpCreateAccountButtonElement = document.getElementById('create-account-btn');
 const signUpEmailErrorMessage = document.getElementById('email-error-message');
+const resetPasswordEmailInputElement = document.getElementById('email-forgot-password');
+const resetPasswordSubmitButtonElement = document.getElementById('forgot-password-btn');
+const resetPasswordEmailErrorMessage = document.getElementById('email-error-message');
 
 
 if (signInButtonElement) {
@@ -63,6 +66,36 @@ if (signUpCreateAccountButtonElement) {
             data: {
                 email: signUpUserInputEmail,
                 password: signUpUserInputPassword
+            },
+            success: function (navigation) {
+                window.location.href = navigation;
+            },
+            error: function (message) {
+                alert(message)
+            }
+        })
+    });
+}
+
+
+if (resetPasswordSubmitButtonElement) {
+    resetPasswordSubmitButtonElement.addEventListener('click', (event) => {
+        console.log("Reset password button clicked");
+    
+        let resetPasswordUserInputEmail = resetPasswordEmailInputElement.value;
+    
+        if (!resetPasswordUserInputEmail) {
+            resetPasswordEmailErrorMessage.innerHTML = "Email cannot be empty";
+        }
+        else {
+            resetPasswordEmailErrorMessage.innerHTML = "";
+        }
+    
+        $.ajax({
+            url: "/forgot-password",
+            type: "POST",
+            data: {
+                email: resetPasswordUserInputEmail
             },
             success: function (navigation) {
                 window.location.href = navigation;
