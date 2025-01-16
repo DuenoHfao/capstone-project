@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 import os
 import logging
 import secrets
+from dotenv import load_dotenv
 from datetime import datetime
 from static.dynamo_requests import *
 
@@ -41,7 +42,7 @@ def signup():
             user = UserModel(email=email, password=password)
             user.save()
             flash("Account created successfully! Please log in.", "success")
-            return redirect(url_for("login"))
+            return redirect(url_for('templates',filename="login"))
 
     return render_template("signup.html", logged_in=is_logged_in())
 
@@ -50,17 +51,18 @@ def login():
     if request.method == "POST":
         email = request.form.get("email")
         password = request.form.get("password")
-
         try:
             user = UserModel.get(email)
             if user.password == password:
                 session["user"] = email
                 flash("Logged in successfully!", "success")
-                return redirect(url_for("dashboard"))
+                return 'credential success'
+                return redirect(url_for("home"))
+            
             else:
                 flash("Invalid credentials. Please try again.", "error")
         except DoesNotExist:
-            flash("Invalid credentials. Please try again.", "error")
+            flash("Invarequest.form.getlid credentials. Please try again.", "error")
 
     return render_template("login.html", logged_in=is_logged_in())
 

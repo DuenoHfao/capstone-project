@@ -1,5 +1,4 @@
 import os
-from dotenv import load_dotenv
 from pynamodb.models import Model
 from pynamodb.attributes import UnicodeAttribute
 from pynamodb.exceptions import DoesNotExist

@@ -4,6 +4,7 @@ const loginPasswordInputElement = document.getElementById('password-input');
 const signInEmailErrorMessage = document.getElementById('email-error-message');
 
 
+
 signInButtonElement.addEventListener('click', (event) => {
     let userInputEmail = loginEmailInputElement.value;
 
@@ -12,9 +13,24 @@ signInButtonElement.addEventListener('click', (event) => {
         signInEmailErrorMessage.innerHTML = "Email cannot be empty";
         return;
     }
+    else {
+        signInEmailErrorMessage.innerHTML == "";
+    }
 
     let userInputPassword = loginPasswordInputElement.value;
-    $.ajax({url:'/login',
-        type: "POST"
-    });
+
+    $.ajax({
+        url: "/login",
+        type: "POST",
+        data: {
+            email: userInputEmail,
+            password: userInputPassword
+        },
+        success: function (navigation) {
+            window.location.href = '/'
+        },
+        error: function (message) {
+            alert(message)
+        }
+    })
 })
