@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from pynamodb.models import Model
 from pynamodb.attributes import UnicodeAttribute
 from pynamodb.exceptions import DoesNotExist
