@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
@@ -11,10 +12,10 @@
   <main>
     <div class="auth-page_container">
       <h2>Login</h2>
-      <form method="post" action="{{ url_for('login') }}">
+      <form id="login-form">
         <div class="input-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required>
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required>
         </div>
         <div class="input-group">
           <label for="password">Password</label>
@@ -22,9 +23,44 @@
         </div>
         <button type="submit" class="btn">Login</button>
       </form>
+      <p id="response-message" style="color: red;"></p>
       <p><a href="{{ url_for('reset_password') }}">Forgot your password?</a></p>
       <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign Up</a></p>
     </div>
   </main>
+
+  <script>
+    $(document).ready(function() {
+      $('#login-form').on('submit', function(event) {
+        event.preventDefault(); // Prevent form from reloading the page
+
+        const username = $('#username').val();
+        const password = $('#password').val();
+
+        $.ajax({
+          url: '/authenticate_user',
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({ username, password }),
+          success: function(response) {
+            if (response.success) {
+              // Display success message and redirect
+              $('#response-message').css('color', 'green').text(response.message);
+              setTimeout(() => {
+                window.location.href = '/dashboard'; // Redirect to dashboard
+              }, 1000);
+            } else {
+              // Display error message
+              $('#response-message').css('color', 'red').text(response.message);
+            }
+          },
+          error: function(xhr) {
+            const errorMessage = xhr.responseJSON?.message || 'An unexpected error occurred.';
+            $('#response-message').css('color', 'red').text(errorMessage);
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>

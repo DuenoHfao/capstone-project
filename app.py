@@ -2,9 +2,17 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from pynamodb.models import Model
 from pynamodb.attributes import UnicodeAttribute
 from pynamodb.exceptions import DoesNotExist
+from werkzeug.security import check_password_hash, generate_password_hash
+
 
 app = Flask(__name__)
 app.secret_key = "secret-key"
+
+##TEST
+local_users_db = {
+    "testuser": generate_password_hash("password123"),  # username: "testuser", password: "password123"
+    "admin": generate_password_hash("adminpass"),      # username: "admin", password: "adminpass"
+}
 
 # DynamoDB table schema (js googled a basic ass one bruh)
 class User(Model):
@@ -98,6 +106,34 @@ def reset_password():
 @app.route("/terms")
 def terms():
     return render_template("terms.html", logged_in=is_logged_in())
+
+users = {
+    "example_user": {"password_hash": "pbkdf2:sha256:150000$example$hash"}
+}
+
+@app.route('/authenticate_user', methods=['POST'])
+def authenticate_user():
+    try:
+        # Parse JSON data
+        data = request.get_json()
+        username = data.get('username')
+        password = data.get('password')
+
+        # Validate input
+        if not username or not password:
+            return jsonify({"success": False, "message": "Invalid username or password."}), 400
+
+        # Check if user exists
+        user = users.get(username)
+        if not user or not check_password_hash(user['password_hash'], password):
+            return jsonify({"success": False, "message": "Invalid username or password."}), 401
+
+        # Login successful
+        return jsonify({"success": True, "message": "Login successful!"}), 200
+
+    except Exception as e:
+        print(f"Error during login: {e}")
+        return jsonify({"success": False, "message": "An error occurred."}), 500
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8000)
