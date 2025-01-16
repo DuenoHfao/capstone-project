@@ -56,6 +56,7 @@ def login():
             if user.password == password:
                 session["user"] = email
                 flash("Logged in successfully!", "success")
+                session['user'] = email
                 return url_for("dashboard")
             
             else:
@@ -97,6 +98,22 @@ def reset_password():
 @app.route("/terms")
 def terms():
     return render_template("terms.html", logged_in=is_logged_in())
+
+@app.route("/delete-account", methods=["POST"])
+def delete_account():
+    if not is_logged_in():
+        return "Unauthorized", 401
+
+    
+    email = session.get("user")
+    try:
+        user = UserModel.get(email)
+        user.delete()
+        session.pop("user", None)
+        flash("Account deleted successfully from DynamoDB.", "success")
+        return "Account deleted", 200
+    except DoesNotExist:
+        return "User not found", 404
 
 if __name__ == "__main__":
     logging.basicConfig(filename='myapp.log', level=logging.INFO)

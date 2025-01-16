@@ -93,7 +93,7 @@ if (resetPasswordSubmitButtonElement) {
         }
     
         $.ajax({
-            url: "/forgot-password",
+            url: "/reset-password",
             type: "POST",
             data: {
                 email: resetPasswordUserInputEmail
@@ -115,13 +115,14 @@ if (deleteAccountButtonElement) {
         $.ajax({
             url: "/delete-account",
             type: "POST",
-            success: function (navigation) {
-                alert("Account deleted successfully");
+            success: function (message) {
+                // Add AJAX call to delete user from DynamoDB
+                alert(message);
                 window.location.href = '/';
             },
             error: function (message) {
-                alert(message)
+                alert("Failed to delete account from DynamoDB: " + message);
             }
-        })
+        });
     });
 }
