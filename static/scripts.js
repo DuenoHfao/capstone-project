@@ -6,6 +6,8 @@ const signUpEmailInputElement = document.getElementById('signup-email-input');
 const signUpPasswordInputElement = document.getElementById('signup-password-input');
 const signUpCreateAccountButton = document.getElementById('create-account-btn');
 
+console.log(signInButtonElement);
+
 signInButtonElement.addEventListener('click', (event) => {
     let userInputEmail = loginEmailInputElement.value;
 
@@ -34,10 +36,11 @@ signInButtonElement.addEventListener('click', (event) => {
             alert(message)
         }
     })
-})
+});
+
+console.log(signUpCreateAccountButton);
 
 signUpCreateAccountButton.addEventListener('click', (event) => {
-    alert(signUpEmailInputElement);
 
     let signUpUserInputEmail = signUpEmailInputElement.value;
 
@@ -59,7 +62,8 @@ signUpCreateAccountButton.addEventListener('click', (event) => {
             password: signUpUserInputPassword
         },
         success: function (navigation) {
-            window.location.href = navigation;
+            console.log(navigation)
+            // window.location.href = navigation;
         },
         error: function (message) {
             alert(message)

@@ -30,6 +30,7 @@ def home():
 def signup():
     if request.method == "POST":
         email = request.form.get("email")
+        return email
         password = request.form.get("password")
 
         try:
@@ -38,7 +39,7 @@ def signup():
             flash("Email already registered. Please log in.", "error")
             return url_for("login")
         except DoesNotExist:
-            # Else c    reate a new user
+            # Else create a new user
             user = UserModel(email=email, password=password)
             user.save()
             flash("Account created successfully! Please log in.", "success")
