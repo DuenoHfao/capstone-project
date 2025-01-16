@@ -17,7 +17,7 @@ COPY . .
 EXPOSE 5500
 
 # Set environment variables
-ENV PYTHONUNBUFFERED=1
+# ENV PYTHONUNBUFFERED=1
 
 # Run app.py when the container launches
 CMD ["python", "app.py"]
